@@ -21,10 +21,19 @@ tour2 = 'ddct_berp_municipales_2020_tour2_'
 
 # this function allows you to download via a download link pattern
 def download_election_municipal_opendata(xls_url, number, round):
-    resp = requests.get(xls_url)
-    output = open('assets/xls/'+ 'ddct_berp_municipales_2020_' + round + '_ardt_' + number + '.xls', 'wb')
-    output.write(resp.content)
-    output.close()
+
+    try:
+        resp = requests.get(xls_url)
+        if (resp.status_code == 200):
+            print('Downloading ... ' + xls_url)
+
+            output = open('assets/xls/' + round + '/ddct_berp_municipales_2020_' + round + '_ardt_' + number + '.xls', 'wb')
+            output.write(resp.content)
+            output.close()
+        else:
+            print('Sorry. This download does not work... ' + xls_url)
+    except requests.exceptions.HTTPError as err:
+        raise SystemExit(err)
 
 # loop to go through the 20 districts of Paris
 for x in range (1, 21):
@@ -32,7 +41,7 @@ for x in range (1, 21):
     number = (('0' + str(x))  if x < 10 else str(x))
 
     # download an excel list of the first round municipal elections 2020-03-15
-    download_election_municipal_opendata(opendata + '-1ertour/attachments/' + tour1 + 'Ardt_' + number + '_20200315_xls/', number, 'tour1')
+    download_election_municipal_opendata(opendata + '1ertour/attachments/' + tour1 + 'ardt_' + number + '_20200315_xls/', number, 'tour1')
 
     # download an excel list of the second round municipal elections 2020-06-28
-    download_election_municipal_opendata(opendata + '-2emetour/attachments/' + tour2 + 'ardt_' + number + '_20200628_xls/', number, 'tour2')
+    download_election_municipal_opendata(opendata + '2emetour/attachments/' + tour2 + 'ardt_' + number + '_20200628_xls/', number, 'tour2')

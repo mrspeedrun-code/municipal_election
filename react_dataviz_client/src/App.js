@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import './styles/App.css'
 import SvgComponent from './components/SvgComponent'
+
+// fake data
 import parisData from './assets/parisData.json'
 
 import * as d3 from 'd3'
@@ -9,7 +11,6 @@ class App extends Component {
     constructor(props) {
         super(props)
     }
-
 
     // modèle temporaire
     formater = (data) => {

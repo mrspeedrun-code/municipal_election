@@ -34,8 +34,10 @@ class MongoDB(object):
 if __name__ == '__main__':
     print("Insert PollingStation Collection")
     pollingStation = MongoDB(dBName='MunicipalElection', collectionName='PollingStation')
-    pollingStation.InsertData(path="assets/csv/pollingStationCollection.csv")
+    pollingStation.InsertData(path="assets/csv/pollingStation_tour1.csv")
+    pollingStation.InsertData(path="assets/csv/pollingStation_tour2.csv")
 
     print("Insert Candidate Collection")
-    pollingStation = MongoDB(dBName='MunicipalElection', collectionName='Candidate')
-    pollingStation.InsertData(path="assets/csv/candidatCollection.csv")
+    candidate = MongoDB(dBName='MunicipalElection', collectionName='Candidate')
+    candidate.InsertData(path="assets/csv/candidate_tour1.csv")
+    candidate.InsertData(path="assets/csv/candidate_tour2.csv")

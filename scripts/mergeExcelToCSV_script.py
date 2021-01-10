@@ -5,7 +5,7 @@
 Merge Excel Files to CSV script.
 @author: dle
 Started on: 2020-12-22
-Last update: 2021-01-09
+Last update: 2021-01-10
 
 This script allows to convert a set of xls files into a single csv file.
 """
@@ -14,7 +14,7 @@ try:
     import glob
     import csv
     import json
-    import fileinput
+    import numpy as np
 except Exception as e:
     print("Some Modules are Missing ")
 
@@ -31,17 +31,13 @@ def mergeExcelToCSV(fileName, excel_files):
         merging_data = merging_data.append(df, ignore_index=True)
         merging_data.to_csv('assets/csv/' + fileName + '.csv', index=False)
 
-    # remove useless '.' characters
-    # for line in fileinput.input('assets/csv/' + fileName + '.csv', inplace=True):
-    #     print(line.replace('.', ''), end='')  # not useless linebreak with end settings
-
 # pollingStation Collection
-def pollinStationCollection():
-    outfile = open('assets/csv/pollingStationCollection.csv', 'w')
+def pollinStationCollection(fileName, turn):
+    outfile = open('assets/csv/' + fileName + '.csv', 'w')
     outfile_header = "id_bvote, scrutin, annee, tour, date, num_circ, num_quartier, num_arrond, num_bureau, nb_procu, nb_inscr, nb_emarg, nb_blanc, nb_nul, nb_exprim\n"
     outfile.write(outfile_header)
 
-    with open('assets/csv/tour1.csv', 'r') as infile:
+    with open('assets/csv/'+ turn + '.csv', 'r') as infile:
         reader = csv.reader(infile, delimiter=",")
         header = next(reader)
         for row in reader:
@@ -66,19 +62,18 @@ def pollinStationCollection():
         outfile.close() ## data manquante à revérifier
 
 # candidate Collection
-def candidateCollection():
-    data = pd.read_csv('assets/csv/tour1.csv', delimiter=",")
+def candidateCollection(fileName, turn):
+    data = pd.read_csv('assets/csv/' + turn + '.csv', delimiter=",")
 
     # drop useless column
     useless_column=['SCRUTIN', 'ANNEE', 'DATE', 'NUM_CIRC', 'NUM_QUARTIER', 'NUM_BUREAU', 'NB_PROCU', 'NB_INSCR', 'NB_EMARG', 'NB_BLANC', 'NB_NUL', 'NB_EXPRIM', 'NB_VOTANT']
     data.drop(columns=useless_column, inplace=True, axis=1)
 
-    # convert column to row
+    # unpivot a DataFrame from wide to long format
     melt_data = pd.melt(data, id_vars=['ID_BVOTE', 'NUM_ARROND', 'TOUR'],var_name='CANDIDAT', value_name='NB_VOTE')
-
-    melt_data.to_csv('assets/csv/candidatCollection.csv')
-
-candidateCollection()
+    melt_data['NB_VOTE'].replace('', np.nan, inplace=True)
+    melt_data = melt_data.dropna(subset=['NB_VOTE']) # remove missing values.
+    melt_data.to_csv('assets/csv/' + fileName + '.csv', mode ='w', index=False)
 
 def main():
     print("Convert a set of excel files into a single csv file")
@@ -86,10 +81,12 @@ def main():
     mergeExcelToCSV('tour2', excel_files_tour2)
 
     print("Create a dataset for pollingStation")
-    pollinStationCollection()
+    pollinStationCollection('pollingStation_tour1', 'tour1')
+    pollinStationCollection('pollingStation_tour2', 'tour2')
 
     print("Create a dataset for candidateCollection")
-    candidateCollection()
+    candidateCollection('candidate_tour1', 'tour1')
+    candidateCollection('candidate_tour2', 'tour2')
 
 if __name__ == "__main__":
     main()

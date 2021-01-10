@@ -6,4 +6,9 @@ source ./venv/bin/activate
 pip install pandas
 pip install xlrd
 ## script
+download
+merge
+sed 's/[.]//g' dataFinal.csv   commande pour élimer caractère '.' non désirable
+insert
+
 python mergeExcelToCSV_script.py

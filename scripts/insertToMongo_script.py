@@ -5,7 +5,7 @@
 Insert to mongo script.
 @author: dle
 @date_start: 2020-12-23
-@last_update: 2020-12-23
+@last_update: 2020-01-10
 
 This script allows the insertion of a csv file in a mongo database.
 """
@@ -32,5 +32,10 @@ class MongoDB(object):
         print("All the Data has been Exported to MongoDB Server ....")
 
 if __name__ == '__main__':
-    mongodb = MongoDB(dBName='MunicipalElection', collectionName='PollingStation')
-    mongodb.InsertData(path="assets/csv/dataFinal.csv")
+    print("Insert PollingStation Collection")
+    pollingStation = MongoDB(dBName='MunicipalElection', collectionName='PollingStation')
+    pollingStation.InsertData(path="assets/csv/pollingStationCollection.csv")
+
+    print("Insert Candidate Collection")
+    pollingStation = MongoDB(dBName='MunicipalElection', collectionName='Candidate')
+    pollingStation.InsertData(path="assets/csv/candidatCollection.csv")

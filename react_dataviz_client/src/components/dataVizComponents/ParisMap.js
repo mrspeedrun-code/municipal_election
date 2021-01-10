@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import SvgComponent from '../SvgComponents/SvgComponent'
 import { API_URL } from '../../utils/constants';
 import axios from 'axios'
+import * as d3 from 'd3';
 
 function ParisMap () {
   let [pollingStation, setPollingStation] = useState([])
@@ -12,16 +13,27 @@ function ParisMap () {
     axios.get(`${API_URL}/candidat`).then(res => setCandidate(res.data))
   }, []);
 
-    return (
-      <>
+  const pathColor = (arrond, politique) => {
+    const svg = d3.select('svg').select(arrond)
+
+    switch(politique.toLowerCase()) {
+      case 'gauche':
+        svg.attr('fill', 'red')
+        break;
+      case 'droite':
+        svg.attr('fill', 'blue')
+        break;
+      default:
+        console.log('test')
+    }
+  }
+  pathColor("path#arrondissement04", "droite")
+
+  return (
+    <>
       <SvgComponent />
-      {candidate.map((data) => (
-        <>
-          <h2>{data.CANDIDAT}</h2>
-        </>
-      ))}
-      </>
-    )
+    </>
+  )
 }
 
 export default ParisMap

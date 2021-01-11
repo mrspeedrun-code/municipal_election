@@ -30,6 +30,8 @@ def get_all_pollingStation():
   all_seeds = list(pollingStation.find({}))
   return json.dumps(all_seeds, default=json_util.default)
 
+#pollingstation gettotalbyturn
+
 # ressource for get all candidat
 @app.route('/candidat', methods=['GET'])
 def get_all_candidat():
@@ -42,6 +44,14 @@ def get_all_candidat():
 def get_candidat_list(district, turn):
   candidat = mongo.db.Candidate
   all_seeds = list(candidat.find({'NUM_ARROND': district, 'TOUR': turn}))
+  return json.dumps(all_seeds, default=json_util.default)
+
+
+# ressource for get distinct candidat list and total vote by district and turn
+@app.route('/candidatListDistinctAndTotalVote/<int:district>/<int:turn>', methods=['GET'])
+def get_candidat_list_distinct(district, turn):
+  candidat = mongo.db.Candidate
+  all_seeds = list(candidat.aggregate([{"$match": {"NUM_ARROND": district, "TOUR": turn}}, {"$group": {"_id" : "$CANDIDAT", "Total": {"$sum": "$NB_VOTE"}}}]))
   return json.dumps(all_seeds, default=json_util.default)
 
 if __name__ == "__main__":

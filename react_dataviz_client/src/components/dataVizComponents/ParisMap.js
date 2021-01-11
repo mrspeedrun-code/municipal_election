@@ -38,20 +38,24 @@ function ParisMap () {
   let [pollingStation, setPollingStation] = useState([])
   let [candidate, setCandidate] = useState([])
   let [candidateInfo, setCandidateInfo] = useState([])
+  let [dataVizBuffer, setDataVizBuffer] = useState([])
 
   useEffect(() => {
-    axios.get(`${API_URL}/pollingStation`).then(res => setPollingStation(res.data))
-    axios.get(`${API_URL}/candidat`).then(res => setCandidate(res.data))
+    //axios.get(`${API_URL}/pollingStation`).then(res => setPollingStation(res.data))
+    //axios.get(`${API_URL}/candidat`).then(res => setCandidate(res.data))
+    axios.get(`${API_URL}/candidatListDistinctAndTotalVote/1/1`).then(res => setCandidateInfo(res.data))
 
-    const dataVizBuffer = []
     let count = 1
-    while (count <= 20) {
+    let buffer = []
+    //while (count <= 20) {
       for (let val in data[count]) {
-        dataVizBuffer.push(dataVizFormatter(val, 20, data[count][val]))
-      } ++count
+        buffer.push(dataVizFormatter(val, data[count][val]))
+      //} ++count
     }
 
-    console.log(dataVizBuffer)
+    setDataVizBuffer(buffer)
+    //console.log(dataVizBuffer)
+
   }, []);
 
   const getData = (district) => {
@@ -63,23 +67,104 @@ function ParisMap () {
     const svg = d3.select('svg').select(arrond)
 
     switch(politique.toLowerCase()) {
-      case 'gauche':
-        svg.attr('fill', 'red')
+      case 'lug':
+        svg.attr('fill', '#E85333')
         break;
-      case 'droite':
-        svg.attr('fill', 'blue')
+      case 'luc':
+        svg.attr('fill', '#E8DA33')
+        break;
+      case 'lud':
+        svg.attr('fill', '#3388E8')
+        break;
+      case 'lvec':
+        svg.attr('fill', '#2EC61C')
+        break;
+      case 'ldvc':
+        svg.attr('fill', '#EEE51E')
+        break;
+      case 'lfi':
+        svg.attr('fill', '#861EEE')
+        break;
+      case 'ldvd':
+        svg.attr('fill', '#1EC8EE')
+        break;
+      case 'lrn':
+        svg.attr('fill', '#EE1E1E')
+        break;
+      case 'lp':
+        svg.attr('fill', '#0DF182')
+        break;
+      case 'lexg':
+        svg.attr('fill', '#E54ABB')
+        break;
+      case 'pc':
+        svg.attr('fill', '#27A059')
+        break;
+      case 'vp':
+        svg.attr('fill', '#F0C114')
+        break;
+      case 'pp':
+        svg.attr('fill', '#096C9A')
+        break;
+      case 'ev':
+        svg.attr('fill', '#9A091B')
+        break;
+      case 'lec':
+        svg.attr('fill', '#D0808A')
+        break;
+      case 'pjtm':
+        svg.attr('fill', '#9780D0')
         break;
     }
   }
-  for(let i=0; i<=20; ++i) {
-    let path = (i < 10) ? "path#arrondissement0"+i : "path#arrondissement"+i
 
-    d3.select('svg').select(path).attr('fill', 'white').on("click", function(){
-      getData(i)
-    })
+  const addEventPath =  (databuffer) => {
+    for(let i=0; i<=20; ++i) {
+      let path = (i < 10) ? "path#arrondissement0"+i : "path#arrondissement"+i
 
-    pathColor(path, "gauche")
+      d3.select('svg').select(path).attr('fill', 'white').on("click", function(){
+        getData(i)
+      })
+
+      try {
+        if (databuffer.length > 0 && databuffer !== undefined) pathColor(path, databuffer[i].partie)
+      } catch { console.log("nop") }
+    }
   }
+
+  let databuffer = []
+  const dataVizFormatter2 = (main, sub) => {
+    return {
+      'candidat': main.candidat,
+      'nb_vote': sub.Total,
+      'partie': main.partie,
+      'arrondissement': '1',
+      'tour': '1'
+    }
+  }
+
+  let bigger = 0
+  if (dataVizBuffer.length > 0 && candidateInfo.length > 0) {
+    for (let main of dataVizBuffer) {
+      for (let sub of candidateInfo) {
+        if(main.candidat === sub._id.trim()) {
+          console.log(main.candidat +" + "+ sub._id)
+          databuffer.push(dataVizFormatter2(main, sub))
+
+          if (sub.Total > bigger) {
+            bigger = sub.Total
+            console.log("je suis le  plus grand " + bigger)
+          }
+        }
+      }
+    }
+
+    if (databuffer.length > 0) console.log(databuffer)
+    // console.log('1', dataVizBuffer[0].candidat)
+    // console.log('2', candidateInfo[0]._id)
+
+  }
+  addEventPath(databuffer)
 
   return (
     <>
@@ -104,11 +189,11 @@ function ParisMap () {
             </tr>
           </thead>
           <tbody>
-            {candidateInfo.map(({ _id, Total }) => (
+            {databuffer.map(({ candidat, nb_vote, partie }) => (
               <tr>
-                <td className="file-title">{_id}</td>
-                <td className="file-description">{Total}</td>
-                <td className="politique">'ps'</td>
+                <td className="file-title">{candidat}</td>
+                <td className="file-description">{nb_vote}</td>
+                <td className="politique">{partie}</td>
               </tr>
             ))}
           </tbody>

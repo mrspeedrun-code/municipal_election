@@ -6,6 +6,7 @@ import { API_URL } from '../../utils/constants';
 import axios from 'axios'
 
 function PieChart() {
+  console.log('patate')
 
   return(
     <>

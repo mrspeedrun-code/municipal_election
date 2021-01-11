@@ -1,10 +1,7 @@
-const dataVizFormatter = (candidat, vote, politique) => {
+const dataVizFormatter = (candidat, politique) => {
   return {
     'candidat': candidat,
-    'nb_vote': vote,
-    'partie': politique,
-    'arrondissement': '1',
-    'tour': '1'
+    'partie': politique
   }
 }
 

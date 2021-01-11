@@ -131,7 +131,7 @@ export default ParisMap
 // lug
 // luc
 // lud
-// lvec
+// lvec 
 // ldvc
 // lfi
 // ldvd
@@ -144,3 +144,9 @@ export default ParisMap
 // ev
 // lec
 // pjtm
+
+
+// pie chart
+// proportion des couleurs politiques
+// total de tt les votes de l'arrondissement
+

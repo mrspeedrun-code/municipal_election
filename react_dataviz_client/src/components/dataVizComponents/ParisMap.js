@@ -6,6 +6,9 @@ import { API_URL } from '../../utils/constants';
 import axios from 'axios'
 import * as d3 from 'd3';
 import styled from 'styled-components'
+import data from  '../../utils/partie_politique.json'
+import dataVizFormatter from '../../utils/dataVizFormatter'
+import { quantile } from 'd3';
 
 const Styles = styled.div`
 .files-container {
@@ -40,11 +43,15 @@ function ParisMap () {
     axios.get(`${API_URL}/pollingStation`).then(res => setPollingStation(res.data))
     axios.get(`${API_URL}/candidat`).then(res => setCandidate(res.data))
 
-    function candidatEvent() {
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/1/1`).then(res => setCandidateInfo(res.data))
+    const dataVizBuffer = []
+    let count = 1
+    while (count <= 20) {
+      for (let val in data[count]) {
+        dataVizBuffer.push(dataVizFormatter(val, 20, data[count][val]))
+      } ++count
     }
 
-    //candidatEvent()
+    console.log(dataVizBuffer)
   }, []);
 
   const getData = (district) => {
@@ -64,47 +71,46 @@ function ParisMap () {
         break;
     }
   }
-  pathColor("path#arrondissement04", "droite")
-
-  for(let i=0; i<=20; i++) {
+  for(let i=0; i<=20; ++i) {
     let path = (i < 10) ? "path#arrondissement0"+i : "path#arrondissement"+i
 
-    d3.select('svg').select(path).attr('fill', 'green').on("click", function(){
+    d3.select('svg').select(path).attr('fill', 'white').on("click", function(){
       getData(i)
     })
+
+    pathColor(path, "gauche")
   }
 
   return (
     <>
       <Styles>
-        <ButtonGroup size="lg" className="mb-2">
-          <Button>Carte SVG</Button>
-          <Button variant="info">Pie Chart</Button>
-        </ButtonGroup>
-        <br />
-        <ButtonGroup aria-label="Basic example">
-          <Button variant="secondary" onClick={getData}>Tour 1</Button>
-          <Button variant="secondary">Tour 2</Button>
-        </ButtonGroup>
-        <SvgComponent />
-
-        <h2>Résultat de vote</h2>
         <table className="files-table">
+          <tr>
+            <th>Tour 1</th>
+            <th>Tour 2</th>
+          </tr>
+          <tr>
+            <td><SvgComponent /></td>
+            <td><SvgComponent /></td>
+          </tr>
+        </table>
+        <h2>Résultat de vote tour 1:</h2>
+        <table>
           <thead>
             <tr>
               <th>Nom du Candidat</th>
               <th>Total de vote</th>
+              <th>Partie politique</th>
             </tr>
           </thead>
           <tbody>
             {candidateInfo.map(({ _id, Total }) => (
-                  <tr>
-                    <td className="file-title">{_id}</td>
-                    <td className="file-description">{Total}</td>
-                  </tr>
-                )
-              )
-            }
+              <tr>
+                <td className="file-title">{_id}</td>
+                <td className="file-description">{Total}</td>
+                <td className="politique">'ps'</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </ Styles>
@@ -120,3 +126,21 @@ export default ParisMap
 // nombre total de vote par candidat
 // arrondissement du candidat
 // associé au candidat un étiquette de quel partie politique ils 
+
+
+// lug
+// luc
+// lud
+// lvec
+// ldvc
+// lfi
+// ldvd
+// lrn
+// lp
+// lexg
+// pc
+// vp
+// pp
+// ev
+// lec
+// pjtm

@@ -39,6 +39,7 @@ function ParisMap () {
   let [pollingStation, setPollingStation] = useState([])
   let [candidate, setCandidate] = useState([])
   let [candidateInfo, setCandidateInfo] = useState([])
+  let [candidateInfo2, setCandidateInfo2] = useState([])
   let [dataVizBuffer, setDataVizBuffer] = useState([])
   let [dataVizBuffer2, setDataVizBuffer2] = useState([])
   let [final, setFinal] = useState([])
@@ -147,7 +148,10 @@ function ParisMap () {
   }, []);
 
   const getData = (district, tour) => {
-    axios.get(`${API_URL}/candidatListDistinctAndTotalVote/${district}/${tour}`).then(res => setCandidateInfo(res.data))
+    axios.get(`${API_URL}/candidatListDistinctAndTotalVote/${district}/${tour}`).then(res => {
+      if(tour ==1)setCandidateInfo(res.data)
+      if(tour ==2)setCandidateInfo2(res.data)
+    })
   }
 
   const pathColor = (arrond, politique, id) => {
@@ -293,24 +297,53 @@ function ParisMap () {
             <td><SvgComponent2 /></td>
           </tr>
         </table>
-        <h2>Résultat de vote tour 1:</h2>
-        <table >
-          <thead>
-            <tr>
-              <th>Nom du Candidat</th>
-              <th>Total de vote</th>
-            </tr>
-          </thead>
-          <tbody>
-            {candidateInfo.map(({_id, Total}) => (
-              <tr>
-                <td className="file-title">{_id}</td>
-                <td className="file-description">{Total}</td>
-                <td className="politique"></td>
-              </tr>
-            ))}
-          </tbody>
+        <table className="files-table">
+          <tr>
+            <th>Résultat T1</th>
+            <th>Résultat T2</th>
+          </tr>
+          <tr>
+            <td>
+              <table className="files-table">
+                <thead>
+                  <tr>
+                    <th>Nom du Candidat</th>
+                    <th>Total de vote</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {candidateInfo.map(({_id, Total}) => (
+                    <tr>
+                      <td className="file-title">{_id}</td>
+                      <td className="file-description">{Total}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </td>
+            <td>
+              <table className="files-table">
+                <thead>
+                  <tr>
+                    <th>Nom du Candidat</th>
+                    <th>Total de vote</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {candidateInfo2.map(({_id, Total}) => (
+                    <tr>
+                      <td className="file-title">{_id}</td>
+                      <td className="file-description">{Total}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </td>
+          </tr>
         </table>
+
+
+ 
       </ Styles>
     </>
   )

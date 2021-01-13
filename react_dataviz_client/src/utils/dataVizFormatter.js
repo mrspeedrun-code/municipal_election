@@ -1,7 +1,8 @@
-const dataVizFormatter = (candidat, politique) => {
+const dataVizFormatter = (candidat, politique, count) => {
   return {
     'candidat': candidat,
-    'partie': politique
+    'partie': politique,
+    'arrondissement': count
   }
 }
 

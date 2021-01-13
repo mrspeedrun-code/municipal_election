@@ -54,5 +54,12 @@ def get_candidat_list_distinct(district, turn):
   all_seeds = list(candidat.aggregate([{"$match": {"NUM_ARROND": district, "TOUR": turn}}, {"$group": {"_id" : "$CANDIDAT", "Total": {"$sum": "$NB_VOTE"}}}]))
   return json.dumps(all_seeds, default=json_util.default)
 
+  # filtre par nom distinct qui a le plus grand nb de vote par arrondissement et par tour
+@app.route('/candidatListAndTotalVote/<int:turn>', methods=['GET'])
+def get_candidat_list_total(turn):
+  candidat = mongo.db.Candidate
+  all_seeds = list(candidat.aggregate([{"$match": {"TOUR": turn}}, {"$group": {"_id" : "$CANDIDAT", "arr": {"$first" : "$NUM_ARROND"}, "Total": {"$sum": "$NB_VOTE"}}}]))
+  return json.dumps(all_seeds, default=json_util.default)
+
 if __name__ == "__main__":
   app.run()

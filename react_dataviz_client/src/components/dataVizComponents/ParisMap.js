@@ -8,7 +8,6 @@ import * as d3 from 'd3';
 import styled from 'styled-components'
 import data from  '../../utils/partie_politique.json'
 import dataVizFormatter from '../../utils/dataVizFormatter'
-import { quantile } from 'd3';
 
 const Styles = styled.div`
 .files-container {
@@ -39,22 +38,64 @@ function ParisMap () {
   let [candidate, setCandidate] = useState([])
   let [candidateInfo, setCandidateInfo] = useState([])
   let [dataVizBuffer, setDataVizBuffer] = useState([])
+  let [final, setFinal] = useState([])
 
   useEffect(() => {
-    //axios.get(`${API_URL}/pollingStation`).then(res => setPollingStation(res.data))
-    //axios.get(`${API_URL}/candidat`).then(res => setCandidate(res.data))
-    axios.get(`${API_URL}/candidatListDistinctAndTotalVote/1/1`).then(res => setCandidateInfo(res.data))
-
-    let count = 1
-    let buffer = []
-    //while (count <= 20) {
-      for (let val in data[count]) {
-        buffer.push(dataVizFormatter(val, data[count][val]))
-      //} ++count
+    let turn = 1
+    let axiosTab = []
+    const axiosFormatter = (data, arr, turn) => {
+      return {
+        'candidat': data._id.trim(),
+        'nb_vote': data.Total,
+        'arrondissement': arr,
+        'tour': turn
+      }
     }
 
-    setDataVizBuffer(buffer)
-    //console.log(dataVizBuffer)
+    axios.all([
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/1/${turn}`),
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/2/${turn}`),
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/3/${turn}`),
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/4/${turn}`),
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/5/${turn}`),
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/6/${turn}`),
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/7/${turn}`),
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/8/${turn}`),
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/9/${turn}`),
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/10/${turn}`),
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/11/${turn}`),
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/12/${turn}`),
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/13/${turn}`),
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/14/${turn}`),
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/15/${turn}`),
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/16/${turn}`),
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/17/${turn}`),
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/18/${turn}`),
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/19/${turn}`),
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/20/${turn}`),
+    ])
+    .then(res => {
+      for (let tmp in res) {
+        for (let sub in res[tmp].data) {
+          let num = parseInt(tmp, 10) + 1
+          axiosTab.push(axiosFormatter(res[tmp].data[sub], num, turn))
+          setFinal(axiosTab)
+        }
+      }
+    });
+
+    //axios.get(`${API_URL}/pollingStation`).then(res => setPollingStation(res.data))
+    //axios.get(`${API_URL}/candidat`).then(res => setCandidate(res.data))
+    let count = 1
+    let dataVizbuffer = []
+    while(count <= 20) {
+      for (let val in data[count]) {
+        dataVizbuffer.push(dataVizFormatter(val, data[count][val], count))
+      } ++count
+    }
+
+    console.log(dataVizbuffer)
+    setDataVizBuffer(dataVizbuffer)
 
   }, []);
 
@@ -136,35 +177,41 @@ function ParisMap () {
   const dataVizFormatter2 = (main, sub) => {
     return {
       'candidat': main.candidat,
-      'nb_vote': sub.Total,
+      'nb_vote': sub.nb_vote,
       'partie': main.partie,
-      'arrondissement': '1',
-      'tour': '1'
+      'arrondissement': main.arrondissement,
+      'tour': sub.tour
     }
   }
 
   let bigger = 0
-  if (dataVizBuffer.length > 0 && candidateInfo.length > 0) {
+  if (dataVizBuffer.length > 0 && final.length > 0) {
     for (let main of dataVizBuffer) {
-      for (let sub of candidateInfo) {
-        if(main.candidat === sub._id.trim()) {
-          console.log(main.candidat +" + "+ sub._id)
+      for (let sub of final) {
+        if(main.candidat === sub.candidat) {
+          //console.log(main.candidat +" + "+ sub.candidat)
           databuffer.push(dataVizFormatter2(main, sub))
 
-          if (sub.Total > bigger) {
-            bigger = sub.Total
-            console.log("je suis le  plus grand " + bigger)
+          if (sub.nb_vote > bigger) {
+            bigger = sub.nb_vote
+            console.log("je suis le  plus grand" + bigger)
+            //databuffer.push(dataVizFormatter2(main, sub))
           }
         }
       }
     }
 
-    if (databuffer.length > 0) console.log(databuffer)
-    // console.log('1', dataVizBuffer[0].candidat)
+    //if (databuffer.length > 0) console.log(databuffer)
+
     // console.log('2', candidateInfo[0]._id)
 
   }
+  console.log(databuffer)
   addEventPath(databuffer)
+
+  //console.log(dataVizBuffer)
+
+  //if (final.length>0)console.log(final)
 
   return (
     <>
@@ -205,33 +252,4 @@ function ParisMap () {
 
 export default ParisMap
 
-// d3 js colorer arronidssement
-// si je trouve le nb total de vote d'un candidat par arrondissement colorer avec d3
-// microservice pour lister les candidatures par arrondissement et par tour
-// nombre total de vote par candidat
-// arrondissement du candidat
-// associé au candidat un étiquette de quel partie politique ils 
-
-
-// lug
-// luc
-// lud
-// lvec 
-// ldvc
-// lfi
-// ldvd
-// lrn
-// lp
-// lexg
-// pc
-// vp
-// pp
-// ev
-// lec
-// pjtm
-
-
-// pie chart
-// proportion des couleurs politiques
-// total de tt les votes de l'arrondissement
 

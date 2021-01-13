@@ -12,6 +12,41 @@ import data2 from  '../../utils/partie_politique2.json'
 import dataVizFormatter from '../../utils/dataVizFormatter'
 
 const Styles = styled.div`
+th{padding:5px;
+}
+p {
+    font-size: small;
+}
+.cercleVert {
+    width: 50px;
+    height: 50px;
+    background: green;
+
+}
+.cerclePs {
+      width: 50px;
+    height: 50px;
+    background: red;
+
+}
+.cercleUmp {
+      width: 50px;
+    height: 50px;
+    background: blue;
+
+
+}
+.cercleModem {
+       width: 50px;
+    height: 50px;
+    background: orange;
+
+}
+.tableaux{
+width:50%;
+  display:inline-block;
+  vertical-align:top;
+}
 .files-container {
   width: 98%;
   overflow-x: auto;
@@ -79,15 +114,15 @@ function ParisMap () {
       axios.get(`${API_URL}/candidatListAndTotalVote/19/${turn}`),
       axios.get(`${API_URL}/candidatListAndTotalVote/20/${turn}`),
     ])
-    .then(res => {
-      for (let tmp in res) {
-        for (let sub in res[tmp].data) {
-          let num = parseInt(tmp, 10) + 1
-          axiosTab.push(axiosFormatter(res[tmp].data[sub], num, turn))
-          setFinal(axiosTab)
-        }
-      }
-    });
+        .then(res => {
+          for (let tmp in res) {
+            for (let sub in res[tmp].data) {
+              let num = parseInt(tmp, 10) + 1
+              axiosTab.push(axiosFormatter(res[tmp].data[sub], num, turn))
+              setFinal(axiosTab)
+            }
+          }
+        });
 
     let turn2 = 2
     let axiosTab2 = []
@@ -113,15 +148,15 @@ function ParisMap () {
       axios.get(`${API_URL}/candidatListAndTotalVote/19/${turn2}`),
       axios.get(`${API_URL}/candidatListAndTotalVote/20/${turn2}`),
     ])
-    .then(res => {
-      for (let tmp in res) {
-        for (let sub in res[tmp].data) {
-          let num = parseInt(tmp, 10) + 1
-          axiosTab2.push(axiosFormatter(res[tmp].data[sub], num, turn))
-          setFinal2(axiosTab2)
-        }
-      }
-    });
+        .then(res => {
+          for (let tmp in res) {
+            for (let sub in res[tmp].data) {
+              let num = parseInt(tmp, 10) + 1
+              axiosTab2.push(axiosFormatter(res[tmp].data[sub], num, turn))
+              setFinal2(axiosTab2)
+            }
+          }
+        });
 
     //axios.get(`${API_URL}/pollingStation`).then(res => setPollingStation(res.data))
     //axios.get(`${API_URL}/candidat`).then(res => setCandidate(res.data))
@@ -255,8 +290,8 @@ function ParisMap () {
       for (let main of dataVizBuffer) {
         for (let sub of final) {
           if(main.candidat === sub.candidat
-            && main.arrondissement === sub.arrondissement
-            && databuffer[idx] === undefined) {
+              && main.arrondissement === sub.arrondissement
+              && databuffer[idx] === undefined) {
             //console.log(main.candidat +" + "+ sub.candidat)
             //console.log(main.arrondissement + " " + sub.arrondissement)
             databuffer.push(dataVizFormatter2(main, sub))
@@ -268,8 +303,8 @@ function ParisMap () {
       for (let main of dataVizBuffer2) {
         for (let sub of final2) {
           if(main.candidat === sub.candidat
-            && main.arrondissement === sub.arrondissement
-            && databuffer2[idx2] === undefined) {
+              && main.arrondissement === sub.arrondissement
+              && databuffer2[idx2] === undefined) {
             databuffer2.push(dataVizFormatter2(main, sub))
           }
         }
@@ -285,67 +320,101 @@ function ParisMap () {
   }, 1000);
 
   return (
-    <>
-      <Styles>
-        <table className="files-table">
-          <tr>
-            <th>Tour 1</th>
-            <th>Tour 2</th>
-          </tr>
-          <tr>
-            <td><SvgComponent /></td>
-            <td><SvgComponent2 /></td>
-          </tr>
-        </table>
-        <table className="files-table">
-          <tr>
-            <th>Résultat T1</th>
-            <th>Résultat T2</th>
-          </tr>
-          <tr>
-            <td>
-              <table className="files-table">
-                <thead>
+      <>
+        <Styles>
+          <div className="tableaux">
+            <div className="cerclePs"><p>PS</p></div>
+            <div className="cercleVert"><p>EELV</p></div>
+            <div className="cercleModem"><p>Modem</p></div>
+            <div className="cercleUmp"><p>UMP</p></div>
+            <div><h6>Tour1</h6></div>
+            <div><SvgComponent /></div>
+            <div><h6>Résultat T1</h6></div>
+            <th>Nom du Candidat</th>
+            <th>Total de vote</th>
+            {candidateInfo.map(({_id, Total}) => (
+                <tr>
+                  <td className="file-title">{_id}</td>
+                  <td className="file-description">{Total}</td>
+                </tr>
+            ))}
+          </div>
+          <div className="tableaux">
+            <div className="cerclePs"><p>PS</p></div>
+            <div className="cercleVert"><p>EELV</p></div>
+            <div className="cercleModem"><p>Modem</p></div>
+            <div className="cercleUmp"><p>UMP</p></div>
+            <div><h6>Tour2</h6></div>
+            <div><SvgComponent2/></div>
+            <div><h6>Résultat T2</h6></div>
+            <th>Nom du Candidat</th>
+            <th>Total de vote</th>
+            {candidateInfo2.map(({_id, Total}) => (
+                <tr>
+                  <td className="file-title">{_id}</td>
+                  <td className="file-description">{Total}</td>
+                </tr>
+            ))}
+          </div>
+        {/**  <table className="files-table">
+            <tr>
+              <th>Tour 1</th>
+              <th>Tour 2</th>
+            </tr>
+            <tr>
+              <td><SvgComponent /></td>
+              <td><SvgComponent2 /></td>
+            </tr>
+          </table>
+          <table className="files-table">
+            <tr>
+              <th>Résultat T1</th>
+              <th>Résultat T2</th>
+            </tr>
+            <tr>
+              <td>
+                <table className="files-table">
+                  <thead>
                   <tr>
                     <th>Nom du Candidat</th>
                     <th>Total de vote</th>
                   </tr>
-                </thead>
-                <tbody>
+                  </thead>
+                  <tbody>
                   {candidateInfo.map(({_id, Total}) => (
-                    <tr>
-                      <td className="file-title">{_id}</td>
-                      <td className="file-description">{Total}</td>
-                    </tr>
+                      <tr>
+                        <td className="file-title">{_id}</td>
+                        <td className="file-description">{Total}</td>
+                      </tr>
                   ))}
-                </tbody>
-              </table>
-            </td>
-            <td>
-              <table className="files-table">
-                <thead>
+                  </tbody>
+                </table>
+              </td>
+              <td>
+                <table className="files-table">
+                  <thead>
                   <tr>
                     <th>Nom du Candidat</th>
                     <th>Total de vote</th>
                   </tr>
-                </thead>
-                <tbody>
+                  </thead>
+                  <tbody>
                   {candidateInfo2.map(({_id, Total}) => (
-                    <tr>
-                      <td className="file-title">{_id}</td>
-                      <td className="file-description">{Total}</td>
-                    </tr>
+                      <tr>
+                        <td className="file-title">{_id}</td>
+                        <td className="file-description">{Total}</td>
+                      </tr>
                   ))}
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </table>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </table>
+*/}
 
 
- 
-      </ Styles>
-    </>
+        </ Styles>
+      </>
   )
 }
 

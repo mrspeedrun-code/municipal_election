@@ -12,6 +12,8 @@ import data2 from  '../../utils/partie_politique2.json'
 import dataVizFormatter from '../../utils/dataVizFormatter'
 
 const Styles = styled.div`
+td{padding:5px;
+}
 th{padding:5px;
 }
 p {
@@ -51,16 +53,7 @@ width:50%;
   width: 98%;
   overflow-x: auto;
 }
-.files-table {
-  width: 100%;
-  border: 1px solid #ccc;
-  border-collapse: collapse;
-  tr,
-  td,
-  th {
-    border: 1px solid #ccc;
-    padding: 10px;
-  }
+
   .file-title {
     width: 20%;
   }
@@ -356,63 +349,6 @@ function ParisMap () {
                 </tr>
             ))}
           </div>
-        {/**  <table className="files-table">
-            <tr>
-              <th>Tour 1</th>
-              <th>Tour 2</th>
-            </tr>
-            <tr>
-              <td><SvgComponent /></td>
-              <td><SvgComponent2 /></td>
-            </tr>
-          </table>
-          <table className="files-table">
-            <tr>
-              <th>Résultat T1</th>
-              <th>Résultat T2</th>
-            </tr>
-            <tr>
-              <td>
-                <table className="files-table">
-                  <thead>
-                  <tr>
-                    <th>Nom du Candidat</th>
-                    <th>Total de vote</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  {candidateInfo.map(({_id, Total}) => (
-                      <tr>
-                        <td className="file-title">{_id}</td>
-                        <td className="file-description">{Total}</td>
-                      </tr>
-                  ))}
-                  </tbody>
-                </table>
-              </td>
-              <td>
-                <table className="files-table">
-                  <thead>
-                  <tr>
-                    <th>Nom du Candidat</th>
-                    <th>Total de vote</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  {candidateInfo2.map(({_id, Total}) => (
-                      <tr>
-                        <td className="file-title">{_id}</td>
-                        <td className="file-description">{Total}</td>
-                      </tr>
-                  ))}
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </table>
-*/}
-
-
         </ Styles>
       </>
   )

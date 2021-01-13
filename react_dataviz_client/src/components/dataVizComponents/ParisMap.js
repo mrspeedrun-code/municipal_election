@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import SvgComponent from '../SvgComponents/SvgComponent'
+import SvgComponent2 from '../SvgComponents/SvgComponent2'
 import { API_URL } from '../../utils/constants';
 import axios from 'axios'
 import * as d3 from 'd3';
 import styled from 'styled-components'
 import data from  '../../utils/partie_politique.json'
+import data2 from  '../../utils/partie_politique2.json'
 import dataVizFormatter from '../../utils/dataVizFormatter'
 
 const Styles = styled.div`
@@ -38,7 +40,9 @@ function ParisMap () {
   let [candidate, setCandidate] = useState([])
   let [candidateInfo, setCandidateInfo] = useState([])
   let [dataVizBuffer, setDataVizBuffer] = useState([])
+  let [dataVizBuffer2, setDataVizBuffer2] = useState([])
   let [final, setFinal] = useState([])
+  let [final2, setFinal2] = useState([])
 
   useEffect(() => {
     let turn = 1
@@ -53,26 +57,26 @@ function ParisMap () {
     }
 
     axios.all([
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/1/${turn}`),
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/2/${turn}`),
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/3/${turn}`),
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/4/${turn}`),
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/5/${turn}`),
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/6/${turn}`),
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/7/${turn}`),
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/8/${turn}`),
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/9/${turn}`),
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/10/${turn}`),
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/11/${turn}`),
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/12/${turn}`),
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/13/${turn}`),
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/14/${turn}`),
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/15/${turn}`),
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/16/${turn}`),
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/17/${turn}`),
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/18/${turn}`),
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/19/${turn}`),
-      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/20/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/1/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/2/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/3/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/4/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/5/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/6/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/7/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/8/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/9/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/10/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/11/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/12/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/13/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/14/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/15/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/16/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/17/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/18/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/19/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/20/${turn}`),
     ])
     .then(res => {
       for (let tmp in res) {
@@ -80,6 +84,40 @@ function ParisMap () {
           let num = parseInt(tmp, 10) + 1
           axiosTab.push(axiosFormatter(res[tmp].data[sub], num, turn))
           setFinal(axiosTab)
+        }
+      }
+    });
+
+    let turn2 = 2
+    let axiosTab2 = []
+    axios.all([
+      axios.get(`${API_URL}/candidatListAndTotalVote/1/${turn2}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/2/${turn2}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/3/${turn2}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/4/${turn2}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/5/${turn2}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/6/${turn2}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/7/${turn}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/8/${turn2}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/9/${turn2}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/10/${turn2}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/11/${turn2}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/12/${turn2}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/13/${turn2}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/14/${turn2}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/15/${turn2}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/16/${turn2}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/17/${turn2}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/18/${turn2}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/19/${turn2}`),
+      axios.get(`${API_URL}/candidatListAndTotalVote/20/${turn2}`),
+    ])
+    .then(res => {
+      for (let tmp in res) {
+        for (let sub in res[tmp].data) {
+          let num = parseInt(tmp, 10) + 1
+          axiosTab2.push(axiosFormatter(res[tmp].data[sub], num, turn))
+          setFinal2(axiosTab2)
         }
       }
     });
@@ -94,18 +132,26 @@ function ParisMap () {
       } ++count
     }
 
-    console.log(dataVizbuffer)
     setDataVizBuffer(dataVizbuffer)
+
+    let count2 = 1
+    let dataVizbuffer2 = []
+    while(count2 <= 20) {
+      for (let val in data2[count2]) {
+        dataVizbuffer2.push(dataVizFormatter(val, data2[count2][val], count2))
+      } ++count2
+    }
+
+    setDataVizBuffer2(dataVizbuffer2)
 
   }, []);
 
-  const getData = (district) => {
-    axios.get(`${API_URL}/candidatListDistinctAndTotalVote/${district}/1`).then(res => setCandidateInfo(res.data))
-    // génère un template de tableauu
+  const getData = (district, tour) => {
+    axios.get(`${API_URL}/candidatListDistinctAndTotalVote/${district}/${tour}`).then(res => setCandidateInfo(res.data))
   }
 
-  const pathColor = (arrond, politique) => {
-    const svg = d3.select('svg').select(arrond)
+  const pathColor = (arrond, politique, id) => {
+    const svg = d3.select(id).select(arrond)
 
     switch(politique.toLowerCase()) {
       case 'lug':
@@ -156,62 +202,83 @@ function ParisMap () {
       case 'pjtm':
         svg.attr('fill', '#9780D0')
         break;
+      default:
+        svg.attr('fill', 'white')
+        break;
     }
   }
 
-  const addEventPath =  (databuffer) => {
+  const addEventPath =  (databuffer, id, turn) => {
     for(let i=0; i<=20; ++i) {
       let path = (i < 10) ? "path#arrondissement0"+i : "path#arrondissement"+i
 
-      d3.select('svg').select(path).attr('fill', 'white').on("click", function(){
-        getData(i)
+      d3.select(id).select(path).attr('fill', 'white').on("click", function(){
+        getData(i, turn)
       })
 
       try {
-        if (databuffer.length > 0 && databuffer !== undefined) pathColor(path, databuffer[i].partie)
+        if (databuffer.length > 0 && databuffer !== undefined) {
+          if (i > 0) {
+            //console.log(i,"patate", databuffer[i-1].arrondissement)
+            //console.log(databuffer[i-1])
+            if(i === databuffer[i-1].arrondissement) {
+              pathColor(path, databuffer[i-1].partie, id)
+            }
+          }
+        }
       } catch { console.log("nop") }
     }
   }
 
   let databuffer = []
+  let databuffer2 = []
   const dataVizFormatter2 = (main, sub) => {
     return {
       'candidat': main.candidat,
       'nb_vote': sub.nb_vote,
       'partie': main.partie,
-      'arrondissement': main.arrondissement,
+      'arrondissement': sub.arrondissement,
       'tour': sub.tour
     }
   }
 
-  let bigger = 0
-  if (dataVizBuffer.length > 0 && final.length > 0) {
-    for (let main of dataVizBuffer) {
-      for (let sub of final) {
-        if(main.candidat === sub.candidat) {
-          //console.log(main.candidat +" + "+ sub.candidat)
-          databuffer.push(dataVizFormatter2(main, sub))
 
-          if (sub.nb_vote > bigger) {
-            bigger = sub.nb_vote
-            console.log("je suis le  plus grand" + bigger)
-            //databuffer.push(dataVizFormatter2(main, sub))
+  setTimeout(() => {
+    if (dataVizBuffer.length > 0 && final.length > 0) {
+      let idx = 0; // compteur non doublon
+      let idx2 = 0
+
+      for (let main of dataVizBuffer) {
+        for (let sub of final) {
+          if(main.candidat === sub.candidat
+            && main.arrondissement === sub.arrondissement
+            && databuffer[idx] === undefined) {
+            //console.log(main.candidat +" + "+ sub.candidat)
+            //console.log(main.arrondissement + " " + sub.arrondissement)
+            databuffer.push(dataVizFormatter2(main, sub))
           }
         }
+        ++idx;
+      }
+
+      for (let main of dataVizBuffer2) {
+        for (let sub of final2) {
+          if(main.candidat === sub.candidat
+            && main.arrondissement === sub.arrondissement
+            && databuffer2[idx2] === undefined) {
+            databuffer2.push(dataVizFormatter2(main, sub))
+          }
+        }
+        ++idx2;
       }
     }
 
-    //if (databuffer.length > 0) console.log(databuffer)
+    if (databuffer.length > 0 && databuffer2.length > 0) {
+      addEventPath(databuffer, '#Layer_1', 1)
+      addEventPath(databuffer2, '#Layer_2', 2)
+    }
 
-    // console.log('2', candidateInfo[0]._id)
-
-  }
-  console.log(databuffer)
-  addEventPath(databuffer)
-
-  //console.log(dataVizBuffer)
-
-  //if (final.length>0)console.log(final)
+  }, 1000);
 
   return (
     <>
@@ -223,24 +290,23 @@ function ParisMap () {
           </tr>
           <tr>
             <td><SvgComponent /></td>
-            <td><SvgComponent /></td>
+            <td><SvgComponent2 /></td>
           </tr>
         </table>
         <h2>Résultat de vote tour 1:</h2>
-        <table>
+        <table >
           <thead>
             <tr>
               <th>Nom du Candidat</th>
               <th>Total de vote</th>
-              <th>Partie politique</th>
             </tr>
           </thead>
           <tbody>
-            {databuffer.map(({ candidat, nb_vote, partie }) => (
+            {candidateInfo.map(({_id, Total}) => (
               <tr>
-                <td className="file-title">{candidat}</td>
-                <td className="file-description">{nb_vote}</td>
-                <td className="politique">{partie}</td>
+                <td className="file-title">{_id}</td>
+                <td className="file-description">{Total}</td>
+                <td className="politique"></td>
               </tr>
             ))}
           </tbody>

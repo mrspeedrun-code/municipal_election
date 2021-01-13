@@ -1,10 +1,10 @@
 import React from "react";
 
-function SvgComponent() {
+function SvgComponent2() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      id="Layer_1"
+      id="Layer_2"
       x="0"
       y="0"
       version="1.1"
@@ -314,4 +314,4 @@ function SvgComponent() {
   );
 }
 
-export default SvgComponent;
+export default SvgComponent2;

@@ -31,7 +31,7 @@
         "M. BERKANI Christophe": "pc"
     },
     "2": {
-        "Mr WEIL Ariel": "lug",
+        "M. WEIL Ariel": "lug",
         "Mr RUPIN Pacôme": "luc",
         "Mr VERON Aurélien": "lud",
         "Mme REMY-LELEU Raphaëlle": "lvec",
@@ -44,7 +44,7 @@
         "M. BERKANI Christophe": "pc"
     },
     "3": {
-        "Mme WEIL Ariel": "lug",
+        "M. WEIL Ariel": "lug",
         "Mr RUPIN Pacôme": "luc",
         "Mr VERON Aurélien": "lud",
         "Mme REMY-LELEU Raphaëlle": "lvec",
@@ -57,7 +57,7 @@
         "M. BERKANI Christophe": "pc"
     },
     "4": {
-        "Mr WEIL Ariel": "lug",
+        "M. WEIL Ariel": "lug",
         "Mr RUPIN Pacôme": "luc",
         "Mr VERON Aurélien": "lud",
         "Mme REMY-LELEU Raphaëlle": "lvec",
@@ -85,7 +85,7 @@
        "Mr PREAU Jean": "ldiv" 
     },
     "6": {
-        "Mr LECOQ Jean Pierre": "lud",
+        "M. LECOQ Jean-Pierre": "lud",
         "Mr GANTZER Gaspard": "luc",
         "Mme HERVIEU Céline": "lug",
         "Mme ADNREZ Olivia": "ldvc",
@@ -121,7 +121,7 @@
         "Mr GODICHEAU Pierre": "lp"
     },
     "9": {
-        "Mme BURKLI Delphine": "luc",
+        "Mme BÜRKLI Delphine": "luc",
         "Mr NGATCHA Arnaud": "lug",
         "Mr MAURIN Pierre": "lud",
         "Mr COT Guillaume": "lvec",
@@ -146,7 +146,7 @@
         "Mme ZLOTNIK Atika": "lp"
     },
     "11": {
-        "Mr VAUGLIN François": "lug",
+        "M. VAUGLIN François": "lug",
         "Mme GARNIER Nelly": "lud",
         "Mr POITOUX Guillaume": "luc",
         "Mr BELLIARD David": "lvec",
@@ -159,7 +159,7 @@
         "Mme RANNER-LUXIN Lise-marie": "lp"
     },
     "12": {
-        "Mr GREGROIRE Emmanuel": "lug",
+        "M. GRÉGOIRE Emmanuel": "lug",
         "Mme MONTANDON Valérie": "lud",
         "Mme MAZETIER Sandrine": "luc",
         "Mme PIERRE-MARIE Emmanuelle": "lud",
@@ -170,7 +170,7 @@
         "Mme ELBAZ Caroline": "lp"
     },
     "13": {
-        "Mr COUMET Jérôme": "lug",
+        "M. COUMET Jérôme": "lug",
         "Mr OLIVIER Jean-baptiste": "lud",
         "Mr PENG Chang Hua": "luc",
         "Mme SOUYRIS Anne": "lvec",
@@ -191,7 +191,7 @@
         "Mr BONY Clément": "lfi",
         "Mme MAGNAN Annick": "lrn",
         "Mr MILLOT Georges": "lexg",
-        "Mme ELBAZ Caroline": "lp"
+        "Mme PETIT Carine": "lp"
     },
     "15": {
         "Mme EVREN Agnès": "lud",
@@ -205,7 +205,7 @@
         "Mme ROETHLISBERGER Corinne": "lexg"
     },
     "16": {
-        "Mr SZPINER Francis": "lud",
+        "M. SZPINER Francis": "lud",
         "Mme SEBBAH Hanna": "luc",
         "Mme MARRE Béatrice": "lug",
         "Mme COPPIN Anne-Sophie": "ldvc",
@@ -218,7 +218,7 @@
         "Mme NOVELLI Annie": "pp"
     },
     "17": {
-        "Mr BOULARD Geoffroy": "lud",
+        "M. BOULARD Geoffroy": "lud",
         "Mme BUZYN Agnès": "luc",
         "Mme TAIED Karen": "lug",
         "Mme PEREZ Karina": "lvec",
@@ -234,7 +234,7 @@
         "Mr BOURNAZEL Pierre-Yves": "luc",
         "Mme MARRE Béatrice": "lug",
         "Mme BOUX Anne-Claire": "lvec",
-        "Mr LEJOINDRE Eric": "lug",
+        "M. LEJOINDRE Eric": "lug",
         "Mr DHORASOO Vikash": "lfi",
         "Mr ELALOUF Lucas": "ldvc",
         "Mr LISCIA Pierre": "ldvd",
@@ -247,7 +247,7 @@
         "Mr GARNIER Patrick": "lec"
     },
     "19": {
-        "Mr DAGNAUD François": "lug",
+        "M. DAGNAUD François": "lug",
         "Mr LERT Dan": "lvec",
         "Mme TOUBIANA Marie": "lud",
         "Mr ROUXEL Olivier": "ldvc",
@@ -261,7 +261,7 @@
     "20": {
         "Mr DIDIER Francois-Marie": "lud",
         "Mme CALANDRA Frédéric": "luc",
-        "Mr PLIEZ Eric": "lug",
+        "M. PLIEZ Eric": "lug",
         "Mme GHUL Antoinette": "lvec",
         "Mme SIMONNET Danielle": "lfi",
         "Mr NEZZAR Rayan": "ldvc",

@@ -6,6 +6,7 @@ import axios from 'axios'
 import * as d3 from 'd3';
 import AnimatedPieSVG from "./AnimatedPieSVG";
 import styled from 'styled-components'
+import { buffer } from 'd3';
 
 const Styles = styled.div`
 td{padding:5px;
@@ -79,22 +80,38 @@ function PieChart() {
     axios.get(`${API_URL}/candidatListDistinctAndTotalVote/${district}/2`).then(res => setCandidateTotal2(res.data))
   }
 
-  const generateData = (value, length = 5) =>
+  let tmpLength
+  if (candidateTotal1.length > 0) tmpLength = candidateTotal1.length
+  const generateData = (value, length = 1) =>
     d3.range(length).map((item, index) => ({
       date: index,
       value: value === null || value === undefined ? Math.random() * 100 : value
     }));
 
   const [data, setData] = useState(generateData(0));
+
   const changeData = () => {
-    setData(generateData(30));
+    if(tmpLength.length > 0) console.log(tmpLength)
+    if(tmpLength.length > 0) setData(generateData(1000));
   };
 
   useEffect(() => {
+      let bufferLength
+      axios.get(`${API_URL}/pollingStation`).then(res => setPollingStation(res.data))
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/1/1`).then(res => {
+        setCandidateTotal1(res.data)
+        console.log(res.data.length)
+        bufferLength = res.data.length
+      })
+
+      axios.get(`${API_URL}/candidatListDistinctAndTotalVote/1/2`).then(res => setCandidateTotal2(res.data))
       axios.get(`${API_URL}/pollingStation`).then(res => setPollingStation(res.data))
       axios.get(`${API_URL}/pollingStationTotalByDisctrictAndTurn/1/1`).then(res => setPollingStationDistrict1(res.data))
       axios.get(`${API_URL}/pollingStationTotalByDisctrictAndTurn/1/2`).then(res => setPollingStationDistrict2(res.data))
-      setData(generateData(dataset));
+
+      setTimeout(() => {
+        if (bufferLength > 0) setData(generateData(1297, bufferLength));
+      }, 1000);
     },
     [!data]
   );

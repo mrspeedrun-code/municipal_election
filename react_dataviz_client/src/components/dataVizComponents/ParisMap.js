@@ -20,29 +20,29 @@ p {
     font-size: small;
 }
 .cercleVert {
-    width: 50px;
-    height: 50px;
-    background: green;
-
+    width: 120px;
+    height: 20px;
+    background: #0DF182;
+    font-weight: bold;
 }
 .cerclePs {
-      width: 50px;
-    height: 50px;
-    background: red;
-
+    width: 120px;
+    height: 20px;
+    background: #E85333;
+    font-weight: bold;
 }
 .cercleUmp {
-      width: 50px;
-    height: 50px;
-    background: blue;
-
-
+    width: 120px;
+    height: 20px;
+    background: #3388E8;
+    font-weight: bold;
+    color: white;
 }
 .cercleModem {
-       width: 50px;
-    height: 50px;
-    background: orange;
-
+    width: 120px;
+    height: 20px;
+    background: #EEE51E;
+    font-weight: bold;
 }
 .tableaux{
 width:50%;
@@ -316,11 +316,12 @@ function ParisMap () {
       <>
         <Styles>
           <div className="tableaux">
-            <div className="cerclePs"><p>PS</p></div>
-            <div className="cercleVert"><p>EELV</p></div>
-            <div className="cercleModem"><p>Modem</p></div>
-            <div className="cercleUmp"><p>UMP</p></div>
-            <div><h6>Tour1</h6></div>
+            <div className="cerclePs"><p>Union de la gauche</p></div>
+            <div className="cercleVert"><p>Liberons Paris</p></div>
+            <div className="cercleModem"><p>Union du centre</p></div>
+            <div className="cercleUmp"><p>Union de la droite</p></div>
+            <br />
+            <div><h3>Tour1</h3></div>
             <div><SvgComponent /></div>
             <div><h6>Résultat T1</h6></div>
             <th>Nom du Candidat</th>
@@ -333,11 +334,12 @@ function ParisMap () {
             ))}
           </div>
           <div className="tableaux">
-            <div className="cerclePs"><p>PS</p></div>
-            <div className="cercleVert"><p>EELV</p></div>
-            <div className="cercleModem"><p>Modem</p></div>
-            <div className="cercleUmp"><p>UMP</p></div>
-            <div><h6>Tour2</h6></div>
+            <div className="cerclePs"><p>Union de la gauche</p></div>
+            <div className="cercleVert"><p>Liberons Paris</p></div>
+            <div className="cercleModem"><p>Union du centre</p></div>
+            <div className="cercleUmp"><p>Union de la droite</p></div>
+            <br />
+            <div><h3>Tour2</h3></div>
             <div><SvgComponent2/></div>
             <div><h6>Résultat T2</h6></div>
             <th>Nom du Candidat</th>

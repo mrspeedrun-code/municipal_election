@@ -31,6 +31,11 @@ def get_all_pollingStation():
   return json.dumps(all_seeds, default=json_util.default)
 
 #pollingstation gettotalbyturn
+@app.route('/pollingStationTotalByDisctrictAndTurn/<int:district>/<int:turn>', methods=['GET'])
+def get_all_pollingStationTotalByDistrictAndTurn(district, turn):
+  pollingStation = mongo.db.PollingStation
+  all_seeds = list(pollingStation.aggregate([{"$match": {" num_arrond": district, " tour": turn}}, {"$group": {"_id": "$ num_arrond", "procuTotal": {"$sum": "$ nb_procu"}, "inscrTotal": {"$sum": "$ nb_inscr"}, "emargTotal": {"$sum": "$ nb_emarg"}, "votantTotal": {"$sum": "$ nb_votant"}, "blancTotal": {"$sum": "$ nb_blanc"}, "nulTotal": {"$sum": "$ nb_nul"}, "exprimTotal": {"$sum": "$ nb_exprim"}}}]))
+  return json.dumps(all_seeds, default=json_util.default)
 
 # ressource for get all candidat
 @app.route('/candidat', methods=['GET'])
@@ -45,7 +50,6 @@ def get_candidat_list(district, turn):
   candidat = mongo.db.Candidate
   all_seeds = list(candidat.find({'NUM_ARROND': district, 'TOUR': turn}))
   return json.dumps(all_seeds, default=json_util.default)
-
 
 # ressource for get distinct candidat list and total vote by district and turn
 @app.route('/candidatListDistinctAndTotalVote/<int:district>/<int:turn>', methods=['GET'])

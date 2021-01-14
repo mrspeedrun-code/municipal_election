@@ -186,16 +186,16 @@ function PieChart() {
         <h5>Choisissez un arrondissement:</h5>
         <ButtonToolbar aria-label="Toolbar with button groups">
           <ButtonGroup className="mr-2" aria-label="First group">
-            <Button onClick={() => getData(1)}>1</Button> <Button onClick={() => getData(2)}>2</Button> <Button>3</Button> <Button>4</Button> <Button>5</Button>
+            <Button onClick={() => getData(1)}>1</Button> <Button onClick={() => getData(2)}>2</Button> <Button onClick={() => getData(3)}>3</Button> <Button onClick={() => getData(4)}>4</Button> <Button onClick={() => getData(5)}>5</Button>
           </ButtonGroup>
           <ButtonGroup className="mr-2" aria-label="Second group">
-            <Button>6</Button> <Button>7</Button> <Button>8</Button> <Button>9</Button> <Button>10</Button>
+            <Button onClick={() => getData(6)}>6</Button> <Button onClick={() => getData(7)}>7</Button> <Button onClick={() => getData(8)}>8</Button> <Button onClick={() => getData(9)}>9</Button> <Button onClick={() => getData(10)}>10</Button>
           </ButtonGroup>
           <ButtonGroup className="mr-2" aria-label="Third group">
-            <Button>11</Button> <Button>12</Button> <Button>13</Button> <Button>14</Button> <Button>15</Button>
+            <Button onClick={() => getData(11)}>11</Button> <Button onClick={() => getData(12)}>12</Button> <Button onClick={() => getData(13)}>13</Button> <Button onClick={() => getData(14)}>14</Button> <Button onClick={() => getData(15)}>15</Button>
           </ButtonGroup>
           <ButtonGroup className="mr-2" aria-label="Four group">
-            <Button>16</Button> <Button>17</Button> <Button>18</Button> <Button>19</Button> <Button>20</Button>
+            <Button onClick={() => getData(16)}>16</Button> <Button onClick={() => getData(17)}>17</Button> <Button onClick={() => getData(18)}>18</Button> <Button onClick={() => getData(19)}>19</Button> <Button onClick={() => getData(20)}>20</Button>
           </ButtonGroup>
         </ButtonToolbar>
       </ Styles>

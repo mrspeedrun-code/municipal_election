@@ -19,6 +19,18 @@ th{padding:5px;
 p {
     font-size: small;
 }
+.trait{
+border: none;
+    border-right: 2px solid black;
+    overflow: visible;
+}
+hr {
+    border: none;
+    border-top: 1px solid black;
+    overflow: visible;
+    height: 5px;
+}
+
 .cercleVert {
     width: 120px;
     height: 20px;
@@ -48,6 +60,10 @@ p {
 width:50%;
   display:inline-block;
   vertical-align:top;
+  border-top: 1px solid black;
+    border-left: 1px solid black;
+  border-right: 1px solid black;
+
 }
 .files-container {
   width: 98%;
@@ -324,8 +340,10 @@ function ParisMap () {
             <div><h3>Tour1</h3></div>
             <div><SvgComponent /></div>
             <div><h6>Résultat T1</h6></div>
-            <th>Nom du Candidat</th>
+            <hr></hr>
+            <th className="trait">Nom du Candidat</th>
             <th>Total de vote</th>
+            <hr></hr>
             {candidateInfo.map(({_id, Total}) => (
                 <tr>
                   <td className="file-title">{_id}</td>
@@ -342,8 +360,10 @@ function ParisMap () {
             <div><h3>Tour2</h3></div>
             <div><SvgComponent2/></div>
             <div><h6>Résultat T2</h6></div>
-            <th>Nom du Candidat</th>
+            <hr></hr>
+            <th className="trait">Nom du Candidat</th>
             <th>Total de vote</th>
+            <hr></hr>
             {candidateInfo2.map(({_id, Total}) => (
                 <tr>
                   <td className="file-title">{_id}</td>
